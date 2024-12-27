@@ -1,32 +1,23 @@
 package com.parkingallocationyash.Entity;
 
 public class ParkingSlot {
-    private int slotId;
-    private String slotName;
-    private boolean isBooked;
 
-    // Getter and Setter for all fields
+    private int SlotId;
+    private String SlotName;
+
     public int getSlotId() {
-        return slotId;
+        return SlotId;
     }
 
     public void setSlotId(int slotId) {
-        this.slotId = slotId;
+        SlotId = slotId;
     }
 
     public String getSlotName() {
-        return slotName;
+        return SlotName;
     }
 
     public void setSlotName(String slotName) {
-        this.slotName = slotName;
-    }
-
-    public boolean isBooked() {
-        return isBooked;
-    }
-
-    public void setBooked(boolean booked) {
-        isBooked = booked;
+        SlotName = slotName;
     }
 }

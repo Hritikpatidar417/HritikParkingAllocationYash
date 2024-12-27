@@ -53,4 +53,26 @@ public class BookingDao {
         }
         return bookings;
     }
+
+    public static List<Booking> getAllBookings() {
+        List<Booking> bookings = new ArrayList<>();
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String query = "SELECT * FROM bookings";
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                //booking.setId(rs.getInt("bookingId"));
+                booking.setUserEmail(rs.getString("userEmail"));
+                booking.setSlot(rs.getString("slotId"));
+                booking.setDate(String.valueOf(rs.getDate("bookingDate")));
+                bookings.add(booking);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bookings;
+    }
+
 }

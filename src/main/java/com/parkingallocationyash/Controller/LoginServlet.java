@@ -16,18 +16,18 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Validate user
         User user = UserDao.validateUser(email, password);
-
         if (user != null) {
-            // Successful login
-            HttpSession session = request.getSession();
-            session.setAttribute("userEmail", user.getEmail());
-            session.setAttribute("userRole", user.getRole()); // Optionally, save the user's role in session
-            response.sendRedirect("UserDashboard.jsp?message=Welcome back, " + user.getName());
+            if ("admin".equals(user.getRole())) {
+                request.getSession().setAttribute("adminEmail", email);
+                response.sendRedirect("AdminDashboard.jsp");
+            } else {
+                request.getSession().setAttribute("userEmail", email);
+                response.sendRedirect("UserDashboard.jsp");
+            }
         } else {
-            // Invalid credentials
-            response.sendRedirect("login.jsp?error=Invalid credentials. Please try again.");
+            response.sendRedirect("login.jsp?error=Invalid email or password.");
         }
     }
+
 }

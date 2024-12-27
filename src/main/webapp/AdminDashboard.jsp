@@ -1,5 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page session="true" %>
+<%
+    String adminEmail = (String) session.getAttribute("adminEmail");
+    if (adminEmail == null) {
+        response.sendRedirect("login.jsp?error=Please login as admin.");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,70 +23,38 @@
         .container {
             width: 60%;
             margin: 50px auto;
-            padding: 20px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
         h2 {
             text-align: center;
-            margin-bottom: 30px;
+            color: #333;
+            margin-bottom: 20px;
         }
-        .nav-links {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 30px;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: white;
+        .btn {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
             background-color: #007BFF;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 18px;
-        }
-        .nav-links a:hover {
-            background-color: #0056b3;
-        }
-        .logout {
+            color: white;
             text-align: center;
-            margin-top: 20px;
-        }
-        .logout a {
             text-decoration: none;
-            color: #FF5733;
+            border-radius: 5px;
             font-size: 16px;
         }
-        .logout a:hover {
-            color: #cc3e1f;
+        .btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-
 <div class="container">
     <h2>Admin Dashboard</h2>
-
-    <%
-        // Check if the admin is logged in, else redirect to login page
-        String adminID = (String) session.getAttribute("adminUser");
-        if (adminID == null) {
-            response.sendRedirect("login.jsp"); // Redirect to login page if not logged in
-            return;
-        }
-    %>
-
-    <!-- Admin Navigation Links -->
-    <div class="nav-links">
-        <a href="viewBookings.jsp">View Bookings</a>
-        <a href="manageParking.jsp">Manage Parking</a>
-    </div>
-
-    <!-- Logout Option -->
-    <div class="logout">
-        <a href="logout.jsp">Logout</a>
-    </div>
+    <a href="ManageParkingSlots.jsp" class="btn">Add/Remove Parking Slots</a>
+    <a href="ViewAllBookings.jsp" class="btn">View All Bookings</a>
+    <a href="LogoutServlet" class="btn">Logout</a>
 </div>
-
 </body>
 </html>

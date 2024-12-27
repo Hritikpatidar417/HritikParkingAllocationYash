@@ -1,5 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ page session="true" %>
+<%
+    String userEmail = (String) session.getAttribute("userEmail");
+    if (userEmail == null) {
+        response.sendRedirect("login.jsp?error=Please login first.");
+        return;
+    }
+    String message = request.getParameter("message");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,58 +17,45 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background: #f4f4f4;
             margin: 0;
             padding: 0;
         }
+
         .container {
-            width: 60%;
+            width: 80%;
+            max-width: 1200px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             text-align: center;
-            margin-bottom: 30px;
         }
-        .profile-info {
-            padding: 10px;
-            border-bottom: 2px solid #ddd;
-            margin-bottom: 20px;
-        }
-        .profile-info p {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-        .nav-links {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 30px;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: white;
-            background-color: #007BFF;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 18px;
-        }
-        .nav-links a:hover {
-            background-color: #0056b3;
-        }
-        .logout {
+
+        .message {
             text-align: center;
-            margin-top: 20px;
+            color: green;
         }
-        .logout a {
+
+        .btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
             text-decoration: none;
-            color: #FF5733;
-            font-size: 16px;
         }
-        .logout a:hover {
-            color: #cc3e1f;
+
+        .btn:hover {
+            background-color: #6a11cb;
         }
     </style>
 </head>
@@ -69,36 +64,13 @@
 <div class="container">
     <h2>User Dashboard</h2>
 
-    <%
-        // Check if the user is logged in, else redirect to login page
-        String empID = (String) session.getAttribute("loginUser");
-        if (empID == null) {
-            response.sendRedirect("login.jsp");
-            return;
-        }
+    <% if (message != null) { %>
+    <div class="message"><%= message %></div>
+    <% } %>
 
-        // Simulating user profile data (in a real app, this should come from a database)
-        String userName = "John Doe";  // Example name; this should be fetched from the database based on the empID
-    %>
-
-    <!-- Profile Section -->
-    <div class="profile-info">
-        <h3>Profile Info</h3>
-        <p><strong>Name:</strong> <%= userName %></p>
-        <p><strong>Employee ID:</strong> <%= empID %></p>
-    </div>
-
-    <!-- Navigation Links -->
-    <div class="nav-links">
-        <a href="bookParking.jsp">Book Parking</a>
-        <a href="myBookings.jsp">My Bookings</a>
-    </div>
-
-    <!-- Logout Option -->
-    <div class="logout">
-        <a href="logout.jsp">Logout</a>
-    </div>
-
+    <a href="BookParking.jsp" class="btn">Book Parking</a>
+    <a href="MyBookings.jsp" class="btn">My Bookings</a>
+    <a href="LogoutServlet" class="btn">Logout</a>
 </div>
 
 </body>

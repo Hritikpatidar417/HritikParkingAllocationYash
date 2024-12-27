@@ -62,7 +62,7 @@
 
 <div class="container">
     <h2>Registration Form</h2>
-    <form action="register.jsp" method="POST">
+    <form action="Register" method="POST">
         <!-- Name -->
         <div class="form-group">
             <label for="name">Name:</label>
